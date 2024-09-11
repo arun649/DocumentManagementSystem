@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:UserInteraceLayer"
         mc:Ignorable="d"
-        Title="User List" Height="450" Width="800">
+        Title="User List" Height="550" Width="800">
 
     <Grid Margin="10">
         <Grid.RowDefinitions>
@@ -36,8 +36,8 @@
 
         <!-- Buttons for editing and deleting the selected user -->
         <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center" Margin="10">
-            <!--<Button x:Name="EditButton" Content="Edit" Width="100" Height="30" Click="EditButton_Click" 
-                    Visibility="Collapsed" Margin="5"/>-->
+            <Button x:Name="EditButton" Content="Edit" Width="100" Height="30" Click="EditButton_Click" 
+                    Visibility="Collapsed" Margin="5"/>
             <Button x:Name="DeleteButton" Content="Delete" Width="100" Height="30" Click="DeleteButton_Click" 
                     Visibility="Collapsed" Margin="5"/>
         </StackPanel>

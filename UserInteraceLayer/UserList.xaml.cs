@@ -1,5 +1,6 @@
 ﻿using ApplicationLayer.Services.Interface;
 using DomainLayer.Entities;
+using InfraStructureLayer.Services.Repositories;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -23,6 +24,7 @@ namespace UserInteraceLayer
     public partial class UserList : Window
     {
         private readonly IRegistrationRepository _registrationRepository;
+        private Registration _selectedUser;
         public UserList(IRegistrationRepository registrationRepository)
         {
             InitializeComponent();
@@ -53,37 +55,32 @@ namespace UserInteraceLayer
             }
         }
         // Handle DataGrid selection change to show/hide buttons
-        public void UserDataGrid_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
+        private void UserDataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (UserDataGrid.SelectedItem != null)
+            _selectedUser = UserDataGrid.SelectedItem as Registration;
+            if (_selectedUser != null)
             {
-                //EditButton.Visibility = Visibility.Visible;
+                EditButton.Visibility = Visibility.Visible;
                 DeleteButton.Visibility = Visibility.Visible;
             }
             else
             {
-               // EditButton.Visibility = Visibility.Collapsed;
+                EditButton.Visibility = Visibility.Collapsed;
                 DeleteButton.Visibility = Visibility.Collapsed;
             }
         }
 
-        // Edit button click handler
-        //private async void EditButton_Click(object sender, RoutedEventArgs e)
-        //{
-        //    var selectedUser = (Registration)UserDataGrid.SelectedItem;
-        //    if (selectedUser != null)
-        //    {
-        //        var registrationWindow = new RegistrationWindow(_registrationRepository, selectedUser);
-        //        registrationWindow.ShowDialog();
+        private void EditButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (_selectedUser != null)
+            {
+                var registrationWindow = new RegistrationWindow(_registrationRepository, _selectedUser);
+                //_registrationRepository.UpdateAsync(_selectedUser);
 
-        //        // Refresh the list after editing
-        //        await LoadUserDataAsync();
-        //    }
-        //    else
-        //    {
-        //        MessageBox.Show("Please select a user to edit.");
-        //    }
-        //}
+                registrationWindow.ShowDialog();
+                _ = LoadUserDataAsync(); // Refresh the data grid after editing
+            }
+        }
 
         // Delete button click handler
         public async void DeleteButton_Click(object sender, RoutedEventArgs e)

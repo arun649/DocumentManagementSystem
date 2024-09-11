@@ -57,6 +57,10 @@ namespace InfraStructureLayer.Services.Repositories
                 await _context.SaveChangesAsync();
             }
         }
+        public async Task<Registration?> GetByUserNameAsync(string username)
+        {
+            return await _context.Registrations.FirstOrDefaultAsync(r => r.UserName == username);
+        }
         protected virtual void Dispose(bool disposing)
         {
             if (!_disposed)

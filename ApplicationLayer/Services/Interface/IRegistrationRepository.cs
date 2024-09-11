@@ -14,6 +14,7 @@ namespace ApplicationLayer.Services.Interface
         Task<IEnumerable<Registration>> GetAllAsync();
         Task AddAsync(Registration registration);
         Task UpdateAsync(Registration registration);
+        Task<Registration> GetByUserNameAsync(string username);
         Task DeleteAsync(int id);
         void Dispose();
     }

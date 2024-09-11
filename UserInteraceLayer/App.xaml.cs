@@ -78,12 +78,16 @@ namespace UserInteraceLayer
 
                             // Register repositories
                             services.AddScoped<IRegistrationRepository, RegistrationRepository>();
+                            services.AddScoped<ILoginService, LoginService>();
+                            services.AddScoped<IDocumentUploadRepository, DocumentUploadRepository>();
                             // Register the ViewModel
-                           // services.AddSingleton<RegistrationViewModel>();
+                            // services.AddSingleton<RegistrationViewModel>();
 
                             // Register the Window
                             services.AddTransient<RegistrationWindow>();
                             services.AddTransient<UserList>();
+                            services.AddTransient<Login>();
+                            services.AddTransient<DocumentUpload>();
 
 
                         })
@@ -94,7 +98,7 @@ namespace UserInteraceLayer
         {
             await _host.StartAsync();
             // Resolve the RegistrationWindow, which will automatically resolve its dependencies
-            var mainWindow = _host.Services.GetRequiredService<UserList>();
+            var mainWindow = _host.Services.GetRequiredService<DocumentUpload>();
             mainWindow.Show();
             base.OnStartup(e);
         }

@@ -16,6 +16,7 @@ namespace InfraStructureLayer.Data
         }
 
         public DbSet<Registration> Registrations { get; set; }
+        public DbSet<DocumentUpload> DocumentUploads { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);

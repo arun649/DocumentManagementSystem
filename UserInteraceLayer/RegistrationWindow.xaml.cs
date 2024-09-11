@@ -27,13 +27,17 @@ namespace UserInteraceLayer
     {
         private readonly IRegistrationRepository _registrationRepository;
         private Registration _currentUser;
-
+        private readonly ILoginService _loginService;
+        private readonly IDocumentUploadRepository _documentUploadRepository;
+       
 
         // Constructor that allows passing the ViewModel directly
-        public RegistrationWindow(IRegistrationRepository registrationRepository, Registration user = null)
+        public RegistrationWindow(IRegistrationRepository registrationRepository, Registration user = null, ILoginService loginService = null, IDocumentUploadRepository documentUploadRepository = null)
         {
             InitializeComponent();
             _registrationRepository = registrationRepository;
+            _loginService = loginService;
+            _documentUploadRepository = documentUploadRepository;
             _currentUser = user;
             if (_currentUser != null)
             {
@@ -46,6 +50,7 @@ namespace UserInteraceLayer
                 passwordBox.Password = _currentUser.Password ?? string.Empty;
                 confirmPasswordBox.Password = _currentUser.ConfirmPassword ?? string.Empty;
             }
+           
         }
         private void PasswordBox_PasswordChanged(object sender, RoutedEventArgs e)
         {
@@ -84,8 +89,8 @@ namespace UserInteraceLayer
                     };
 
                     await _registrationRepository.AddAsync(newreg);
-                    UserList userListWindow = new UserList(_registrationRepository);
-                    userListWindow.Show();
+                    Login loginWindow = new Login(_loginService,_registrationRepository, _documentUploadRepository);
+                    loginWindow.Show();
                     this.Close();
 
                 }

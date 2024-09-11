@@ -1,4 +1,5 @@
 ﻿using ApplicationLayer.Services.Interface;
+using DomainLayer.Entities;
 using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
@@ -72,7 +73,7 @@ namespace UserInteraceLayer
                     FileName = System.IO.Path.GetFileName(_selectedFilePath), // Just the file name
                     FilePath = destinationFilePath, // Full file path where the file is saved
                     FileSize = new FileInfo(_selectedFilePath).Length / 1024, // File size in KB
-                    RegistrationId = 1 // For example, replace with actual user ID or registration ID
+                    //RegistrationId = lo// Use the provided registration ID
                 };
 
                 // Add document to repository and save

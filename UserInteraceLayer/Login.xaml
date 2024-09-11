@@ -11,6 +11,7 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
         <!-- Username Field -->
@@ -24,5 +25,15 @@
         <!-- Login Button -->
         <Button x:Name="LoginButton" Content="Login" Grid.Row="2" Grid.Column="1" Width="100" Height="30" 
                 Click="LoginButton_Click" HorizontalAlignment="Right" Margin="10"/>
+
+        <!-- Registration Link -->
+        <TextBlock Grid.Row="3" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center">
+            <TextBlock.Inlines>
+                <Run Text="Not registered? "/>
+                <Hyperlink Click="RegistrationLink_Click">
+                    <Run Text="Register here"/>
+                </Hyperlink>
+            </TextBlock.Inlines>
+        </TextBlock>
     </Grid>
 </Window>

@@ -98,7 +98,7 @@ namespace UserInteraceLayer
         {
             await _host.StartAsync();
             // Resolve the RegistrationWindow, which will automatically resolve its dependencies
-            var mainWindow = _host.Services.GetRequiredService<DocumentUpload>();
+            var mainWindow = _host.Services.GetRequiredService<Login>();
             mainWindow.Show();
             base.OnStartup(e);
         }

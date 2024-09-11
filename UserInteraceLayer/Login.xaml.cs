@@ -22,10 +22,15 @@ namespace UserInteraceLayer
     public partial class Login : Window
     {
         private readonly ILoginService _loginService;
-        public Login(ILoginService loginService)
+        private readonly IRegistrationRepository _registrationRepository;
+        private readonly IDocumentUploadRepository _documentUploadRepository;
+
+        public Login(ILoginService loginService, IRegistrationRepository registrationRepository, IDocumentUploadRepository documentUploadRepository)
         {
             InitializeComponent();
             _loginService = loginService;
+            _registrationRepository = registrationRepository;
+            _documentUploadRepository = documentUploadRepository;
         }
         private async void LoginButton_Click(object sender, RoutedEventArgs e)
         {
@@ -48,8 +53,8 @@ namespace UserInteraceLayer
                     MessageBox.Show("Login successful!", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
 
                     // Open the main application window after successful login
-                    var userListWindow = new UserList(_loginService.GetUserRepository());
-                    userListWindow.Show();
+                    var documentWindow = new DocumentUpload(_documentUploadRepository);
+                    documentWindow.Show();
 
                     // Close the login window
                     this.Close();
@@ -63,6 +68,12 @@ namespace UserInteraceLayer
             {
                 MessageBox.Show($"An error occurred during login: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
+        }
+        private void RegistrationLink_Click(object sender, RoutedEventArgs e)
+        {
+            // Create and show the RegistrationWindow
+            RegistrationWindow registrationWindow = new RegistrationWindow(_registrationRepository);
+            registrationWindow.Show();
         }
     }
 }

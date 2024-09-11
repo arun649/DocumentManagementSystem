@@ -33,9 +33,7 @@ namespace InfraStructureLayer.Services.Repositories
 
         public async Task<IEnumerable<Registration>> GetAllAsync()
         {
-            var t= await _context.Registrations.ToListAsync();
-            var m = await _context.Registrations.Select(x=>x).ToListAsync();
-            return t;
+            return await _context.Registrations.ToListAsync();
         }
 
         public async Task AddAsync(Registration registration)
@@ -50,7 +48,7 @@ namespace InfraStructureLayer.Services.Repositories
             await _context.SaveChangesAsync();
         }
 
-        public async Task DeleteAsync(string id)
+        public async Task DeleteAsync(int id)
         {
             var registration = await _context.Registrations.FindAsync(id);
             if (registration != null)

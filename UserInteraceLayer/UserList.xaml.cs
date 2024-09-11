@@ -1,4 +1,5 @@
 ﻿using ApplicationLayer.Services.Interface;
+using DomainLayer.Entities;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -28,6 +29,14 @@ namespace UserInteraceLayer
             _registrationRepository = registrationRepository;
             _ = LoadUserDataAsync();
         }
+        private void AddUser_Click(object sender, RoutedEventArgs e)
+        {
+            var registrationWindow = new RegistrationWindow(_registrationRepository);
+            registrationWindow.ShowDialog();
+            // Refresh the user list after adding a new user
+            //_ = LoadUserDataAsync();
+            this.Close();
+        }
         private async Task LoadUserDataAsync()
         {
             try
@@ -43,6 +52,69 @@ namespace UserInteraceLayer
                 MessageBox.Show("Error loading data: " + ex.Message);
             }
         }
+        // Handle DataGrid selection change to show/hide buttons
+        public void UserDataGrid_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
+        {
+            if (UserDataGrid.SelectedItem != null)
+            {
+                //EditButton.Visibility = Visibility.Visible;
+                DeleteButton.Visibility = Visibility.Visible;
+            }
+            else
+            {
+               // EditButton.Visibility = Visibility.Collapsed;
+                DeleteButton.Visibility = Visibility.Collapsed;
+            }
+        }
 
+        // Edit button click handler
+        //private async void EditButton_Click(object sender, RoutedEventArgs e)
+        //{
+        //    var selectedUser = (Registration)UserDataGrid.SelectedItem;
+        //    if (selectedUser != null)
+        //    {
+        //        var registrationWindow = new RegistrationWindow(_registrationRepository, selectedUser);
+        //        registrationWindow.ShowDialog();
+
+        //        // Refresh the list after editing
+        //        await LoadUserDataAsync();
+        //    }
+        //    else
+        //    {
+        //        MessageBox.Show("Please select a user to edit.");
+        //    }
+        //}
+
+        // Delete button click handler
+        public async void DeleteButton_Click(object sender, RoutedEventArgs e)
+        {
+            var selectedUser = (Registration)UserDataGrid.SelectedItem;
+            if (selectedUser != null)
+            {
+                var result = MessageBox.Show("Are you sure you want to delete this user?", "Confirmation", MessageBoxButton.YesNo);
+                if (result == MessageBoxResult.Yes)
+                {
+                    try
+                    {
+                        await _registrationRepository.DeleteAsync(selectedUser.Id);
+                        MessageBox.Show("User deleted successfully.");
+
+                        // Refresh the list after deletion
+                        await LoadUserDataAsync();
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show("Error deleting user: " + ex.Message);
+                    }
+                }
+            }
+            else
+            {
+                MessageBox.Show("Please select a user to delete.");
+            }
+        }
     }
+
+
 }
+

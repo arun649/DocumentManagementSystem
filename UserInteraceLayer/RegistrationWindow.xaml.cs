@@ -26,6 +26,7 @@ namespace UserInteraceLayer
     {
         private readonly IRegistrationRepository _registrationRepository;
 
+
         // Constructor that allows passing the ViewModel directly
         public RegistrationWindow(IRegistrationRepository registrationRepository)
         {

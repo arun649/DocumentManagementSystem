@@ -11,30 +11,35 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
-        <!-- Header -->
-        <TextBlock Text="User List" FontSize="24" FontWeight="Bold" HorizontalAlignment="Center" Grid.Row="0" Margin="10"/>
+        <!-- Hyperlink for adding a new user -->
+        <TextBlock Grid.Row="0" HorizontalAlignment="Right" Margin="10">
+            <Hyperlink Click="AddUser_Click" Foreground="Blue" TextDecorations="Underline">
+                Add New User
+            </Hyperlink>
+        </TextBlock>
 
-        <!-- DataGrid to display user data -->
+        <!-- DataGrid for displaying user data -->
         <DataGrid x:Name="UserDataGrid" Grid.Row="1" AutoGenerateColumns="False" CanUserAddRows="False" 
-                  IsReadOnly="True" SelectionMode="Single" Margin="10">
+                  IsReadOnly="True" SelectionMode="Single" Margin="10"
+                  SelectionChanged="UserDataGrid_SelectionChanged">
             <DataGrid.Columns>
-                <!-- Column for First Name -->
                 <DataGridTextColumn Header="First Name" Binding="{Binding Name}" Width="*"/>
-
-                <!-- Column for Last Name -->
                 <DataGridTextColumn Header="Last Name" Binding="{Binding LastName}" Width="*"/>
-
-                <!-- Column for Username -->
                 <DataGridTextColumn Header="Username" Binding="{Binding UserName}" Width="*"/>
-
-                <!-- Column for Email -->
                 <DataGridTextColumn Header="Email" Binding="{Binding Email}" Width="*"/>
-
-                <!-- Column for Phone Number -->
                 <DataGridTextColumn Header="Phone Number" Binding="{Binding PhoneNumber}" Width="*"/>
             </DataGrid.Columns>
         </DataGrid>
+
+        <!-- Buttons for editing and deleting the selected user -->
+        <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center" Margin="10">
+            <!--<Button x:Name="EditButton" Content="Edit" Width="100" Height="30" Click="EditButton_Click" 
+                    Visibility="Collapsed" Margin="5"/>-->
+            <Button x:Name="DeleteButton" Content="Delete" Width="100" Height="30" Click="DeleteButton_Click" 
+                    Visibility="Collapsed" Margin="5"/>
+        </StackPanel>
     </Grid>
 </Window>

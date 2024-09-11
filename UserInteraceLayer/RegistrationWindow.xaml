@@ -16,6 +16,7 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
         <Grid.ColumnDefinitions>
@@ -59,6 +60,8 @@
         <!-- Submit Button -->
         <Button Content="Submit" Grid.Row="7" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Top" Width="150" Height="40"
         Background="#4CAF50" Foreground="White" FontWeight="Bold" Margin="20" Click="Button_Click"/>
+        
+        
 
 
     </Grid>

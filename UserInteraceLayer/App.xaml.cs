@@ -83,6 +83,7 @@ namespace UserInteraceLayer
 
                             // Register the Window
                             services.AddTransient<RegistrationWindow>();
+                            services.AddTransient<UserList>();
 
 
                         })
@@ -93,7 +94,7 @@ namespace UserInteraceLayer
         {
             await _host.StartAsync();
             // Resolve the RegistrationWindow, which will automatically resolve its dependencies
-            var mainWindow = _host.Services.GetRequiredService<RegistrationWindow>();
+            var mainWindow = _host.Services.GetRequiredService<UserList>();
             mainWindow.Show();
             base.OnStartup(e);
         }

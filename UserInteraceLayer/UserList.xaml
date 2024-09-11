@@ -1,0 +1,40 @@
+﻿<Window x:Class="UserInteraceLayer.UserList"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:UserInteraceLayer"
+        mc:Ignorable="d"
+        Title="User List" Height="450" Width="800">
+
+    <Grid Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!-- Header -->
+        <TextBlock Text="User List" FontSize="24" FontWeight="Bold" HorizontalAlignment="Center" Grid.Row="0" Margin="10"/>
+
+        <!-- DataGrid to display user data -->
+        <DataGrid x:Name="UserDataGrid" Grid.Row="1" AutoGenerateColumns="False" CanUserAddRows="False" 
+                  IsReadOnly="True" SelectionMode="Single" Margin="10">
+            <DataGrid.Columns>
+                <!-- Column for First Name -->
+                <DataGridTextColumn Header="First Name" Binding="{Binding Name}" Width="*"/>
+
+                <!-- Column for Last Name -->
+                <DataGridTextColumn Header="Last Name" Binding="{Binding LastName}" Width="*"/>
+
+                <!-- Column for Username -->
+                <DataGridTextColumn Header="Username" Binding="{Binding UserName}" Width="*"/>
+
+                <!-- Column for Email -->
+                <DataGridTextColumn Header="Email" Binding="{Binding Email}" Width="*"/>
+
+                <!-- Column for Phone Number -->
+                <DataGridTextColumn Header="Phone Number" Binding="{Binding PhoneNumber}" Width="*"/>
+            </DataGrid.Columns>
+        </DataGrid>
+    </Grid>
+</Window>

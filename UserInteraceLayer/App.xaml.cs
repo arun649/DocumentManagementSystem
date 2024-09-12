@@ -88,6 +88,8 @@ namespace UserInteraceLayer
                             services.AddTransient<UserList>();
                             services.AddTransient<Login>();
                             services.AddTransient<DocumentUpload>();
+                            services.AddTransient<MainWindow>();
+                            services.AddTransient<DocumentList>();
 
 
                         })
@@ -98,7 +100,7 @@ namespace UserInteraceLayer
         {
             await _host.StartAsync();
             // Resolve the RegistrationWindow, which will automatically resolve its dependencies
-            var mainWindow = _host.Services.GetRequiredService<Login>();
+            var mainWindow = _host.Services.GetRequiredService<MainWindow>();
             mainWindow.Show();
             base.OnStartup(e);
         }

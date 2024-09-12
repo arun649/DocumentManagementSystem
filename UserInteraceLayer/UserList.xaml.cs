@@ -39,7 +39,7 @@ namespace UserInteraceLayer
             //_ = LoadUserDataAsync();
             this.Close();
         }
-        private async Task LoadUserDataAsync()
+        public async Task LoadUserDataAsync()
         {
             try
             {

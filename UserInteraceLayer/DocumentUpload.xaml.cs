@@ -1,5 +1,7 @@
 ﻿using ApplicationLayer.Services.Interface;
+using ApplicationLayer.StaticServices;
 using DomainLayer.Entities;
+using Microsoft.Extensions.Logging;
 using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
@@ -25,11 +27,27 @@ namespace UserInteraceLayer
     {
         private readonly IDocumentUploadRepository _documentUploadRepository;
         private string _selectedFilePath = string.Empty;
+       
+
         public DocumentUpload(IDocumentUploadRepository documentUploadRepository)
         {
             InitializeComponent();
             _documentUploadRepository = documentUploadRepository;
             LoadUploadedDocuments();
+            if (UserSession.IsAuthenticated)
+            {
+                // Use the user session information
+                int registrationId = UserSession.RegistrationId;
+                string username = UserSession.Username;
+
+                // Log or display the information if necessary
+                MessageBox.Show($"Welcome, {username}!", "Info", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
+            else
+            {
+                MessageBox.Show("No active session found.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                this.Close();
+            }
         }
         // Event handler for Browse button to select a file
         private void BrowseFile_Click(object sender, RoutedEventArgs e)
@@ -73,7 +91,7 @@ namespace UserInteraceLayer
                     FileName = System.IO.Path.GetFileName(_selectedFilePath), // Just the file name
                     FilePath = destinationFilePath, // Full file path where the file is saved
                     FileSize = new FileInfo(_selectedFilePath).Length / 1024, // File size in KB
-                    //RegistrationId = lo// Use the provided registration ID
+                    RegistrationId = UserSession.RegistrationId // Use the provided registration ID
                 };
 
                 // Add document to repository and save

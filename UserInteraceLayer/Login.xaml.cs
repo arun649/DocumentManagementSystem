@@ -1,42 +1,36 @@
 ﻿using ApplicationLayer.Services.Interface;
+using ApplicationLayer.StaticServices;
 using InfraStructureLayer.Services.Repositories;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace UserInteraceLayer
 {
-    /// <summary>
-    /// Interaction logic for Login.xaml
-    /// </summary>
     public partial class Login : Window
     {
         private readonly ILoginService _loginService;
         private readonly IRegistrationRepository _registrationRepository;
         private readonly IDocumentUploadRepository _documentUploadRepository;
 
+        // Constructor
         public Login(ILoginService loginService, IRegistrationRepository registrationRepository, IDocumentUploadRepository documentUploadRepository)
         {
             InitializeComponent();
-            _loginService = loginService;
-            _registrationRepository = registrationRepository;
-            _documentUploadRepository = documentUploadRepository;
+            _loginService = loginService ?? throw new ArgumentNullException(nameof(loginService));
+            _registrationRepository = registrationRepository ?? throw new ArgumentNullException(nameof(registrationRepository));
+            _documentUploadRepository = documentUploadRepository ?? throw new ArgumentNullException(nameof(documentUploadRepository));
         }
-        private async void LoginButton_Click(object sender, RoutedEventArgs e)
+
+        // Public property to track login success
+        public bool IsLoginSuccessful { get; private set; }
+
+        // Login button click handler
+        public async void LoginButton_Click(object sender, RoutedEventArgs e)
         {
             string username = UsernameTextBox.Text;
             string password = PasswordBox.Password;
 
+            // Validate input
             if (string.IsNullOrWhiteSpace(username) || string.IsNullOrWhiteSpace(password))
             {
                 MessageBox.Show("Username and password cannot be empty.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
@@ -45,34 +39,53 @@ namespace UserInteraceLayer
 
             try
             {
-                // Call the login service to validate credentials
+                // Validate user credentials using the login service
                 bool isAuthenticated = await _loginService.ValidateUserCredentialsAsync(username, password);
 
                 if (isAuthenticated)
                 {
+                    // Fetch user details
+                    var user = await _registrationRepository.GetByUserNameAsync(username);
+                    if (user == null)
+                    {
+                        MessageBox.Show("User not found.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                        return;
+                    }
+
+                    // Set user session details
+                    UserSession.RegistrationId = user.Id;
+                    UserSession.Username = user.UserName;
+                    UserSession.Email = user.Email;
+                    UserSession.IsAuthenticated = true;
+
+                    // Set login status as successful
+                    IsLoginSuccessful = true;
+
                     MessageBox.Show("Login successful!", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
 
-                    // Open the main application window after successful login
-                    var documentWindow = new DocumentUpload(_documentUploadRepository);
-                    documentWindow.Show();
-
-                    // Close the login window
+                    // Open the main window and close the login window
+                    //var mainWindow = new MainWindow(_documentUploadRepository, _registrationRepository, _loginService);
+                    //mainWindow.Show();
                     this.Close();
                 }
                 else
                 {
+                    // Show login failure message
                     MessageBox.Show("Invalid username or password.", "Login Failed", MessageBoxButton.OK, MessageBoxImage.Warning);
                 }
             }
             catch (Exception ex)
             {
+                // Catch any unexpected errors during the login process
                 MessageBox.Show($"An error occurred during login: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
+
+        // Handle registration link click
         private void RegistrationLink_Click(object sender, RoutedEventArgs e)
         {
-            // Create and show the RegistrationWindow
-            RegistrationWindow registrationWindow = new RegistrationWindow(_registrationRepository);
+            // Open the registration window
+            var registrationWindow = new RegistrationWindow(_registrationRepository);
             registrationWindow.Show();
         }
     }

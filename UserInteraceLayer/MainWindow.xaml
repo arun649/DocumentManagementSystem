@@ -19,7 +19,7 @@
         <StackPanel Background="BlueViolet" Grid.Column="0">
             <!-- Logo or Admin Title -->
             <Border Background="Blue" Padding="20">
-                <TextBlock Text="Admin Panel"
+                <TextBlock Text="Phoneme Solutions"
                            Foreground="White"
                            FontSize="22"
                            FontWeight="Bold"
@@ -29,7 +29,6 @@
             <!-- Menu Items -->
             <StackPanel Margin="20,30,0,0">
                 <Button Content="Dashboard"
-                        Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}"
                         Margin="0,10"
                         Padding="10"
                         HorizontalContentAlignment="Left"
@@ -37,50 +36,72 @@
                         Background="Red"
                         BorderBrush="Transparent"/>
 
-                <Button Content="Users"
-                        Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}"
+                <!-- Users Button (Initially hidden) -->
+                <Button x:Name="UsersButton"
+                        Content="Users"
                         Margin="0,10"
                         Padding="10"
                         HorizontalContentAlignment="Left"
                         Foreground="White"
                         Background="Red"
-                        BorderBrush="Transparent"/>
+                        BorderBrush="Transparent"
+                        Click="UsersButton_Click"
+                        Visibility="Collapsed"/>
 
-                <Button Content="Reports"
-                        Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}"
+                <!-- Documents Button (Initially hidden) -->
+                <Button x:Name="DocumentsButton"
+                        Content="Documents"
                         Margin="0,10"
                         Padding="10"
                         HorizontalContentAlignment="Left"
                         Foreground="White"
                         Background="Red"
-                        BorderBrush="Transparent"/>
+                        BorderBrush="Transparent"
+                        Click="DocumentsButton_Click"
+                        Visibility="Collapsed"/>
 
-                <Button Content="Settings"
-                        Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}"
+                <!-- Settings Button (Initially hidden) -->
+                <Button x:Name="DocumentListButton"
+                        Content="DocumentList"
                         Margin="0,10"
                         Padding="10"
                         HorizontalContentAlignment="Left"
                         Foreground="White"
                         Background="Red"
-                        BorderBrush="Transparent"/>
+                        BorderBrush="Transparent"
+                        Visibility="Collapsed"/>
             </StackPanel>
 
             <!-- Footer Section -->
             <StackPanel VerticalAlignment="Bottom" Margin="20,0,0,20">
-                <Button Content="Logout"
-                        Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}"
+                <!-- Login Button (Visible before login) -->
+                <Button x:Name="LoginButton"
+                        Content="Login"
                         Margin="0,10"
                         Padding="10"
                         HorizontalContentAlignment="Left"
                         Foreground="White"
                         Background="Red"
-                        BorderBrush="Transparent"/>
+                        BorderBrush="Transparent"
+                        Click="LoginButton_Click"/>
+
+                <!-- Logout Button (Hidden before login) -->
+                <Button x:Name="LogoutButton"
+                        Content="Logout"
+                        Margin="0,10"
+                        Padding="10"
+                        HorizontalContentAlignment="Left"
+                        Foreground="White"
+                        Background="Red"
+                        BorderBrush="Transparent"
+                        Click="LogoutButton_Click"
+                        Visibility="Collapsed"/>
             </StackPanel>
         </StackPanel>
 
         <!-- Main Content Area -->
         <Grid Grid.Column="1" Background="#f0f0f0">
-            <TextBlock Text="Welcome to the Admin Dashboard"
+            <TextBlock Text="Welcome to the Document Management System"
                        VerticalAlignment="Center"
                        HorizontalAlignment="Center"
                        FontSize="28"
